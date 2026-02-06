@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Prathik</title>
+    <style>
+        /* Global Styles - Matching Home Page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', 'Lucida Grande', sans-serif;
+        }
+
+        body {
+            background-image: url("background.jpeg");
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Navigation (Identical to Home) --- */
+        .my-custom-nav {
+            background: rgba(51, 51, 51, 0.95);
+            color: white;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-top: 2px;
+            max-width: 200px;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .nav-links li a:hover { color: #ff9f43; }
+
+        /* --- Contact Content --- */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        /* Form Styling */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .submit-btn {
+            background: #333;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #ff9f43;
+            color: #333;
+        }
+
+        .social-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .social-links a:hover { color: #ff9f43; }
+
+        /* Mobile Menu Logic (Identical to Home) */
+        .nav-toggle { display: none; }
+        .nav-toggle-label { display: none; cursor: pointer; }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggle-label { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(51, 51, 51, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: 0.4s;
+            }
+            .nav-toggle:checked ~ .nav-links { left: 0; }
+            .nav-toggle-label span, .nav-toggle-label span::before, .nav-toggle-label span::after {
+                display: block; background: white; height: 2px; width: 25px; position: relative;
+            }
+            .nav-toggle-label span::before { content: ''; top: 8px; }
+            .nav-toggle-label span::after { content: ''; bottom: 10px; }
+        }
+
+        footer {
+            padding: 20px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="my-custom-nav">
+        <div class="nav-container">
+            <div class="logo-box">
+                <div class="logo">Welcome</div>
+                <div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div>
+            </div>
+            
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            
+            <ul class="nav-links">
+                <li><a href="website.html">Home</a></li>
+                <li><a href="Education.html">Education</a></li>
+                <li><a href="Projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="glass-card">
+            <h2>Get In Touch</h2>
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/prathik-kontham-b221b2330/">LinkedIn</a>
+                <a href="https://github.com/Prath1k">GitHub</a>
+                <a href="https://www.instagram.com/_prth.x_/">Instagram</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>@2026 all rights reserved to prathik.</footer>
+    
+</body>
+</html>

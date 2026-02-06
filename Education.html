@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education | Prathik</title>
+    <style>
+        /* Global Styles & Nav  */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Lucida Sans', sans-serif; }
+        body { background-image: url("background.jpeg"); background-size: cover; background-attachment: fixed; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        .my-custom-nav { background: rgba(51, 51, 51, 0.95); color: white; position: sticky; top: 0; z-index: 1000; padding: 10px 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo-box { display: flex; flex-direction: column; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-tagline { font-size: 0.7rem; color: #ccc; margin-top: 2px; max-width: 200px; line-height: 1.2; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li a { color: white; text-decoration: none; padding: 10px 20px; transition: 0.3s; font-size: 0.9rem; }
+        .nav-links li a:hover { color: #ff9f43; }
+
+        /* Education Content */
+        .main-wrapper { flex: 1; padding: 40px 20px; display: flex; justify-content: center; align-items: center; }
+        .glass-card { background: rgba(252, 251, 251, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); max-width: 700px; width: 100%; }
+        
+        .edu-item { margin-bottom: 30px; border-left: 3px solid #333; padding-left: 20px; text-align: left; }
+        .edu-year { font-weight: bold; color: #ff9f43; font-size: 0.9rem; }
+        .edu-title { font-size: 1.4rem; margin: 5px 0; color: #1a1a1a; }
+        .edu-desc { font-size: 0.95rem; color: #444; }
+
+        footer { padding: 20px; color: rgb(255, 255, 255); text-align: center; font-size: 0.8rem; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav class="my-custom-nav">
+        <div class="nav-container">
+            <div class="logo-box">
+                <div class="logo">Welcome</div>
+                <div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="website.html">Home</a></li>
+                <li><a href="Education.html">Education</a></li>
+                <li><a href="Projects.html">Projects</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="glass-card">
+            <h2 style="margin-bottom: 30px; text-align: center;">Educational Background</h2>
+            <div class="edu-item">
+                <p class="edu-year">2024 - Present</p>
+                <h3 class="edu-title">B.Tech Degree</h3>
+                <p class="edu-desc">Focusing on Computer Science, Data Structures, and Algorithms.</p>
+            </div>
+            <div class="edu-item">
+                <p class="edu-year">2022 - 2024</p>
+                <h3 class="edu-title">Higher Secondary School</h3>
+                <p class="edu-desc">Completed with a focus on and Science.</p>
+            </div>
+        </div>
+    </div>
+    <footer>@2026 all rights reserved to prathik.</footer>
+</body>
+</html>
