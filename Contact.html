@@ -217,12 +217,18 @@
     <div class="main-wrapper">
         <div class="glass-card">
             <h2>Get In Touch</h2>
-            <form id="contact-form" action="https://formspree.io/f/mdaldzzl" method="POST" class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" required></textarea>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
+           <form id="contact-form" action="https://formspree.io/f/mdaldzzl" method="POST" class="contact-form">
+    
+    <input type="text" name="name" placeholder="Your Name" required>
+    
+    <input type="email" name="email" placeholder="Your Email" required>
+    
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    
+    <button type="submit" class="submit-btn">Send Message</button>
+
+    <p id="status-message" style="display: none; font-weight: bold; margin-top: 10px;"></p>
+</form>
 
             <div class="social-links">
                 <a href="https://www.linkedin.com/in/prathik-kontham-b221b2330/">LinkedIn</a>
