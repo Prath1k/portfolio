@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prathik | Portfolio</title>
+    <link rel="stylesheet" href="theme.css">
     <style>
         /* Global Styles */
         * {
@@ -13,20 +15,91 @@
             font-family: 'Lucida Sans', 'Lucida Grande', sans-serif;
         }
 
+        html,
         body {
-            background-image: url("background.jpeg");
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling on mobile */
+        }
+
+        body {
+            background-image: var(--bg-image);
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
-            color: #333;
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll during animations */
+        }
+
+        /* --- Keyframe Animations --- */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(255, 159, 67, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(255, 159, 67, 0.6);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(255, 159, 67, 0.2);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .animate-up {
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Staggered animation delays */
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.5s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.7s;
         }
 
         /* --- Navigation Styles --- */
         .my-custom-nav {
-            background: rgba(51, 51, 51, 0.95);
+            background: var(--nav-bg);
             color: white;
             position: sticky;
             top: 0;
@@ -71,12 +144,30 @@
             color: white;
             text-decoration: none;
             padding: 10px 20px;
-            transition: 0.3s;
+            transition: color 0.3s ease;
             font-size: 0.9rem;
+            position: relative;
+        }
+
+        /* Animated Underline for Nav */
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
         .nav-links li a:hover {
-            color: #ff9f43;
+            color: var(--accent);
+        }
+
+        .nav-links li a:hover::after {
+            width: calc(100% - 40px);
         }
 
         /* --- Main Content --- */
@@ -90,36 +181,54 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
             padding: 40px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px var(--glass-shadow);
             max-width: 600px;
             width: 100%;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--glass-shadow-hover);
         }
 
         h1.main-name {
             font-style: italic;
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
-            color: #1a1a1a;
+            color: var(--heading-color);
+            background: linear-gradient(45deg, var(--heading-color), #555);
+            background-clip: text;
+            /* standard property added */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .rounded-corners {
             width: 180px;
             height: 180px;
+            aspect-ratio: 1 / 1;
+            max-width: 100%;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid white;
             margin-bottom: 20px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 6s ease-in-out infinite;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .rounded-corners:hover {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(5deg);
+            animation-play-state: paused;
         }
 
         .welcome-text {
@@ -138,19 +247,28 @@
 
         .btn {
             text-decoration: none;
-            background: #333;
-            color: white;
+            background: var(--btn-bg);
+            color: var(--btn-text);
             padding: 12px 25px;
             border-radius: 50px;
             font-size: 0.9rem;
             font-weight: bold;
-            transition: 0.3s;
-            border: 2px solid #333;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 2px solid var(--btn-bg);
+            display: inline-block;
+            touch-action: manipulation;
+            /* Remove 300ms tap delay on mobile */
         }
 
         .btn:hover {
             background: transparent;
-            color: #333;
+            color: var(--btn-text);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
         }
 
         /* --- Footer --- */
@@ -163,11 +281,30 @@
         }
 
         /* --- Mobile Responsiveness --- */
-        .nav-toggle { display: none; }
-        .nav-toggle-label { display: none; cursor: pointer; }
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .glass-card {
+                padding: 30px;
+            }
+
+            h1.main-name {
+                font-size: 2.5rem;
+            }
+        }
 
         @media screen and (max-width: 768px) {
-            .nav-toggle-label { display: block; }
+            .nav-toggle-label {
+                display: block;
+            }
+
             .nav-links {
                 position: fixed;
                 top: 70px;
@@ -180,22 +317,101 @@
                 padding-top: 50px;
                 transition: 0.4s;
             }
-            .nav-toggle:checked ~ .nav-links { left: 0; }
-            .nav-toggle-label span, .nav-toggle-label span::before, .nav-toggle-label span::after {
+
+            .nav-toggle:checked~.nav-links {
+                left: 0;
+            }
+
+            .nav-toggle-label span,
+            .nav-toggle-label span::before,
+            .nav-toggle-label span::after {
                 display: block;
                 background: white;
                 height: 2px;
                 width: 25px;
                 position: relative;
             }
-            .nav-toggle-label span::before { content: ''; top: 8px; }
-            .nav-toggle-label span::after { content: ''; bottom: 10px; }
-            
-            h1.main-name { font-size: 2.2rem; }
+
+            .nav-toggle-label span::before {
+                content: '';
+                top: 8px;
+            }
+
+            .nav-toggle-label span::after {
+                content: '';
+                bottom: 10px;
+            }
+
+            .glass-card {
+                padding: 20px;
+            }
+
+            h1.main-name {
+                font-size: 2.2rem;
+            }
+
+            .rounded-corners {
+                width: 140px;
+                height: 140px;
+                aspect-ratio: 1 / 1;
+            }
+
+            .welcome-text {
+                font-size: 1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-container {
+                padding: 0 10px;
+                flex-wrap: nowrap;
+            }
+
+            .logo-box {
+                flex: 1;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-tagline {
+                display: none;
+                /* Hide tagline on tiny screens to save space */
+            }
+
+            .theme-switch {
+                margin-left: auto;
+                margin-right: 15px;
+                transform: scale(0.85);
+                /* Slightly shrink toggle */
+            }
+
+            .glass-card {
+                padding: 15px;
+            }
+
+            h1.main-name {
+                font-size: 1.8rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
+
 <body>
+    <video id="dark-bg-video" loop muted playsinline>
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+    <canvas id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></canvas>
 
     <nav class="my-custom-nav">
         <div class="nav-container">
@@ -203,15 +419,20 @@
                 <div class="logo">Welcome</div>
                 <div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div>
             </div>
-            
+
             <input type="checkbox" id="nav-toggle" class="nav-toggle">
-            
+
             <ul class="nav-links">
-                <li><a href="./index.html">Home</a></li>
+                <li><a href=".index.html">Home</a></li>
                 <li><a href="./Education.html">Education</a></li>
                 <li><a href="./Projects.html">Projects</a></li>
                 <li><a href="./Contact.html">Contact</a></li>
             </ul>
+
+            <label class="theme-switch" title="Toggle Theme">
+                <input type="checkbox" id="themeToggleCheckbox">
+                <span class="slider round"></span>
+            </label>
 
             <label for="nav-toggle" class="nav-toggle-label">
                 <span></span>
@@ -220,23 +441,27 @@
     </nav>
 
     <div class="main-wrapper">
-        <div class="glass-card">
-            <h1 class="main-name">Sameoldguy.</h1> 
-            
-            
-            <img class="rounded-corners" src="prathik.jpeg" alt="profile picture">
-            
-            <p class="welcome-text">Hello Welcome To Mysite</p>
+        <div class="glass-card animate-up">
+            <h1 class="main-name animate-up delay-1">Sameoldguy.</h1>
 
-            <div class="button-group">
+            <div class="animate-up delay-2" style="display: inline-block;">
+                <img class="rounded-corners" style="position: relative; z-index: 2;" src="prathik.jpeg"
+                    alt="profile picture">
+            </div>
+
+            <p class="welcome-text animate-up delay-3">Hello Welcome To Mysite</p>
+
+            <div class="button-group animate-up delay-4">
                 <a href="./Education.html" class="btn">Education</a>
-                
+
                 <a href="./Projects.html" class="btn">Projects</a>
             </div>
         </div>
     </div>
-    
+
     <footer>@2026 all rights reserved to prathik.</footer>
-    
+
+    <script src="scripts.js"></script>
 </body>
+
 </html>
