@@ -1,69 +1,372 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects | Prathik</title>
+    <link rel="stylesheet" href="theme.css">
     <style>
         /* Global Styles & Nav (Same as Home/Education) */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Lucida Sans', sans-serif; }
-        body { background-image: url("background.jpeg"); background-size: cover; background-attachment: fixed; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
-        .my-custom-nav { background: rgba(51, 51, 51, 0.95); color: white; position: sticky; top: 0; z-index: 1000; padding: 10px 0; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo-box { display: flex; flex-direction: column; }
-        .logo { font-size: 1.5rem; font-weight: bold; }
-        .nav-tagline { font-size: 0.7rem; color: #ccc; margin-top: 2px; max-width: 200px; line-height: 1.2; }
-        .nav-links { display: flex; list-style: none; }
-        .nav-links li a { color: white; text-decoration: none; padding: 10px 20px; transition: 0.3s; font-size: 0.9rem; }
-        .nav-links li a:hover { color: #ff9f43; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', sans-serif;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling on mobile */
+        }
+
+        body {
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .my-custom-nav {
+            background: var(--nav-bg);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-top: 2px;
+            max-width: 200px;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links li a:hover::after {
+            width: calc(100% - 40px);
+        }
 
         /* Projects Grid */
-        .main-wrapper { flex: 1; padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
-        h2 { text-align: center; margin-bottom: 40px; color: #1a1a1a; font-size: 2rem; }
-        
-        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .project-card { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 15px; padding: 25px; transition: transform 0.3s; text-align: center; }
-        .project-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.3); }
-        
-        .project-card h3 { margin-bottom: 10px; color: #1a1a1a; }
-        .project-card p { font-size: 0.9rem; color: #444; margin-bottom: 20px; }
-        .project-btn { text-decoration: none; background: #333; color: white; padding: 8px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; transition: 0.3s; }
-        .project-btn:hover { background: #ff9f43; color: #333; }
+        .main-wrapper {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        footer { padding: 20px; color: rgb(255, 255, 255); text-align: center; font-size: 0.8rem; font-weight: bold; }
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--heading-color);
+            font-size: 2rem;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--glass-shadow);
+        }
+
+        .project-card::before {
+            content: 'Live Preview Feature Demo';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), transparent);
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .project-card * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+            transform: translateY(0%);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            background: var(--card-bg-hover);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px var(--glass-shadow-hover);
+        }
+
+        .project-card h3 {
+            margin-bottom: 10px;
+            color: var(--heading-color);
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .project-btn {
+            text-decoration: none;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid var(--btn-bg);
+            display: inline-block;
+            touch-action: manipulation;
+        }
+
+        .project-btn:hover {
+            background: transparent;
+            color: var(--btn-text);
+        }
+
+        /* Mobile Menu */
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .project-grid {
+                gap: 20px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-toggle-label {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(51, 51, 51, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: 0.4s;
+            }
+
+            .nav-toggle:checked~.nav-links {
+                left: 0;
+            }
+
+            .nav-toggle-label span,
+            .nav-toggle-label span::before,
+            .nav-toggle-label span::after {
+                display: block;
+                background: white;
+                height: 2px;
+                width: 25px;
+                position: relative;
+            }
+
+            .nav-toggle-label span::before {
+                content: '';
+                top: 8px;
+            }
+
+            .nav-toggle-label span::after {
+                content: '';
+                bottom: 10px;
+            }
+
+            .project-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            .project-card {
+                padding: 20px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-container {
+                padding: 0 10px;
+                flex-wrap: nowrap;
+            }
+
+            .logo-box {
+                flex: 1;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-tagline {
+                display: none;
+                /* Hide tagline on tiny screens to save space */
+            }
+
+            .theme-switch {
+                margin-left: auto;
+                margin-right: 15px;
+                transform: scale(0.85);
+                /* Slightly shrink toggle */
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+        }
+
+        footer {
+            padding: 20px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
+    <video id="dark-bg-video" loop muted playsinline>
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+    <canvas id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></canvas>
+
     <nav class="my-custom-nav">
         <div class="nav-container">
             <div class="logo-box">
                 <div class="logo">Welcome</div>
                 <div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div>
             </div>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
             <ul class="nav-links">
-                <li><a href="./index.html">Home</a></li>
+                <li><a href="./website.html">Home</a></li>
                 <li><a href="./Education.html">Education</a></li>
                 <li><a href="./Projects.html">Projects</a></li>
                 <li><a href="./Contact.html">Contact</a></li>
             </ul>
+
+            <label class="theme-switch" title="Toggle Theme">
+                <input type="checkbox" id="themeToggleCheckbox">
+                <span class="slider round"></span>
+            </label>
+
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
         </div>
     </nav>
 
     <div class="main-wrapper">
         <h2>My Work</h2>
         <div class="project-grid">
-            <div class="project-card">
+            <div class="project-card scroll-observe delay-1">
                 <h3>Portfolio Website</h3>
                 <p>A modern, responsive personal portfolio built with HTML and CSS.</p>
                 <a href="#" class="project-btn">View Project</a>
             </div>
-            <div class="project-card">
+            <div class="project-card scroll-observe delay-2">
                 <h3>Tic-Tac-Toe Game</h3>
                 <p>A classic interactive game developed using html , c and logic algorithms.</p>
                 <a href="https://prath1k.github.io/tic-tac-toe/" class="project-btn">View Project</a>
             </div>
-            <div class="project-card">
+            <div class="project-card scroll-observe delay-3">
                 <h3>Proposal Website</h3>
                 <p>A creative, interactive website designed for a Valentine's Day proposal.</p>
                 <a href="https://prath1k.github.io/valentines/" class="project-btn">View Project</a>
@@ -71,5 +374,8 @@
         </div>
     </div>
     <footer>@2026 all rights reserved to prathik.</footer>
+
+    <script src="scripts.js"></script>
 </body>
+
 </html>
