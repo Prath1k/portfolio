@@ -80,11 +80,13 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            position: relative;
         }
 
         .logo-box {
             display: flex;
             flex-direction: column;
+            z-index: 2;
         }
 
         .logo {
@@ -103,6 +105,9 @@
         .nav-links {
             display: flex;
             list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .nav-links li a {
@@ -250,6 +255,15 @@
         }
 
         @media screen and (max-width: 768px) {
+            .logo-box {
+                flex: 1;
+            }
+
+            .theme-switch {
+                margin-left: auto;
+                margin-right: 20px;
+            }
+
             .nav-toggle-label {
                 display: block;
             }
@@ -265,6 +279,7 @@
                 align-items: center;
                 padding-top: 50px;
                 transition: 0.4s;
+                transform: none;
             }
 
             .nav-toggle:checked~.nav-links {
