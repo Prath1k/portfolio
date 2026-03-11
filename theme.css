@@ -1,0 +1,165 @@
+/* Global Theme Variables */
+
+:root {
+    /* Auto dark mode base based on OS, or overridden by class */
+    --bg-image: url("background.jpeg");
+    --text-primary: #333;
+    --text-secondary: #444;
+    --text-muted: #ccc;
+    --heading-color: #1a1a1a;
+    --nav-bg: rgba(51, 51, 51, 0.95);
+    --card-bg: rgba(255, 255, 255, 0.2);
+    --card-bg-hover: rgba(255, 255, 255, 0.4);
+    --card-border: rgba(255, 255, 255, 0.3);
+    --btn-bg: #333;
+    --btn-text: white;
+    --accent: #3b82f6;
+    --glass-shadow: rgba(0, 0, 0, 0.1);
+    --glass-shadow-hover: rgba(0, 0, 0, 0.15);
+    --input-bg: rgba(255, 255, 255, 0.8);
+    --input-border: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    /* Dark Mode Overrides - Deep Space Feel */
+    --bg-image: url('background.jpeg');
+    --text-primary: #f0f0f0;
+    --text-secondary: #d0d0d0;
+    --text-muted: #888;
+    --heading-color: #ffffff;
+    --nav-bg: rgba(10, 10, 10, 0.95);
+    --card-bg: rgba(30, 30, 30, 0.5);
+    --card-bg-hover: rgba(40, 40, 40, 0.7);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --btn-bg: #ffffff;
+    --btn-text: #1a1a1a;
+    --accent: #3b82f6;
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+    --glass-shadow-hover: rgba(0, 0, 0, 0.7);
+    --input-bg: rgba(30, 30, 30, 0.8);
+    --input-border: rgba(255, 255, 255, 0.1);
+}
+
+/* --- Theme Toggle Switch --- */
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 75px;
+    height: 26px;
+    margin-left: 15px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: .4s;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    z-index: 2;
+}
+
+.slider::after {
+    position: absolute;
+    content: "LIGHT";
+    color: var(--text-primary);
+    font-size: 0.65rem;
+    font-weight: bold;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    z-index: 1;
+}
+
+input:checked+.slider {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+input:checked+.slider:before {
+    transform: translateX(49px);
+}
+
+input:checked+.slider::after {
+    content: "DARK";
+    color: white;
+    left: 10px;
+    right: auto;
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* --- Dark Mode Background Video --- */
+#dark-bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+    /* Allows clicks to pass through */
+}
+
+[data-theme="dark"] #dark-bg-video {
+    opacity: 1;
+}
+
+/* --- Global Intersect Animations --- */
+.scroll-observe {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-observe.animate-up-trigger {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Base delay overrides if needed */
+.delay-1 {
+    transition-delay: 0.1s;
+}
+
+.delay-2 {
+    transition-delay: 0.3s;
+}
+
+.delay-3 {
+    transition-delay: 0.5s;
+}
+
+.delay-4 {
+    transition-delay: 0.7s;
+}
