@@ -22,7 +22,7 @@
 
 [data-theme="dark"] {
     /* Dark Mode Overrides - Deep Space Feel */
-    --bg-image: url('background.jpeg');
+    --bg-image: none;
     --text-primary: #f0f0f0;
     --text-secondary: #d0d0d0;
     --text-muted: #888;
