@@ -106,13 +106,13 @@
             width: calc(100% - 40px);
         }
 
-        /* Education Content */
+        /* Education Timeline */
         .main-wrapper {
             flex: 1;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
         }
 
         .glass-card {
@@ -127,37 +127,162 @@
             width: 100%;
         }
 
-        .edu-item {
-            margin-bottom: 30px;
-            border-left: 3px solid var(--text-primary);
-            padding-left: 20px;
-            text-align: left;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .edu-item:hover {
-            border-left-color: var(--accent);
-            background: var(--card-bg-hover);
-            transform: translateX(10px);
-            border-radius: 0 10px 10px 0;
-        }
-
-        .edu-year {
-            font-weight: bold;
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .edu-title {
-            font-size: 1.4rem;
-            margin: 5px 0;
+        .timeline-heading {
+            text-align: center;
+            margin-bottom: 40px;
             color: var(--heading-color);
+            font-size: 1.8rem;
+            letter-spacing: 0.03em;
         }
 
-        .edu-desc {
-            font-size: 0.95rem;
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        /* Glowing vertical connector line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                var(--accent) 10%,
+                rgba(79, 134, 247, 0.7) 50%,
+                rgba(168, 85, 247, 0.7) 80%,
+                transparent 100%
+            );
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(79, 134, 247, 0.3);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: timeline-fadeIn 0.7s ease forwards;
+        }
+
+        .timeline-node:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-node:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-node:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-node:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes timeline-fadeIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Pulsing dot on timeline */
+        .timeline-dot {
+            position: absolute;
+            left: -33px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 12px var(--accent), 0 0 25px rgba(79, 134, 247, 0.2);
+            z-index: 2;
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            opacity: 0;
+            animation: dot-ping 2s ease-out infinite;
+        }
+
+        @keyframes dot-ping {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* Card for each education entry */
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(79, 134, 247, 0.05), rgba(168, 85, 247, 0.05));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateX(8px);
+            border-color: rgba(79, 134, 247, 0.25);
+            box-shadow: 0 8px 30px rgba(79, 134, 247, 0.1);
+        }
+
+        .timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            color: var(--heading-color);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
             color: var(--text-secondary);
+            line-height: 1.5;
+            position: relative;
+        }
+
+        /* Certification node with special dashed border */
+        .timeline-node.certification .timeline-dot {
+            background: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5), 0 0 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .timeline-node.certification .timeline-dot::after {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .timeline-node.certification .timeline-card {
+            border-style: dashed;
+            border-color: rgba(168, 85, 247, 0.25);
+        }
+
+        .timeline-node.certification .timeline-year {
+            color: rgba(168, 85, 247, 0.8);
         }
 
         /* Mobile Menu */
@@ -179,11 +304,6 @@
         @media screen and (max-width: 768px) {
             .logo-box {
                 flex: 1;
-            }
-
-            .theme-switch {
-                margin-left: auto;
-                margin-right: 20px;
             }
 
             .nav-toggle-label {
@@ -232,8 +352,16 @@
                 padding: 20px;
             }
 
-            .edu-title {
-                font-size: 1.2rem;
+            .timeline { padding-left: 35px; }
+            .timeline::before { left: 12px; }
+            .timeline-dot { left: -30px; width: 12px; height: 12px; }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            .timeline-card {
+                padding: 16px 18px;
             }
         }
 
@@ -267,12 +395,21 @@
                 padding: 15px;
             }
 
-            .edu-title {
-                font-size: 1.1rem;
+            .timeline-heading { font-size: 1.4rem; margin-bottom: 28px; }
+            .timeline { padding-left: 28px; }
+            .timeline::before { left: 10px; }
+            .timeline-dot { left: -24px; width: 10px; height: 10px; }
+
+            .timeline-title {
+                font-size: 1rem;
             }
 
-            .edu-item {
-                margin-bottom: 20px;
+            .timeline-node {
+                margin-bottom: 25px;
+            }
+
+            .timeline-card {
+                padding: 14px 16px;
             }
         }
 
@@ -302,7 +439,7 @@
             <input type="checkbox" id="nav-toggle" class="nav-toggle">
 
             <ul class="nav-links">
-                <li><a href="./index.html">Home</a></li>
+                <li><a href="./website.html">Home</a></li>
                 <li><a href="./Education.html">Education</a></li>
                 <li><a href="./Projects.html">Projects</a></li>
                 <li><a href="./Contact.html">Contact</a></li>
@@ -320,33 +457,43 @@
     </nav>
 
     <div class="main-wrapper">
-        <div class="glass-card scroll-observe">
-            <h2 style="margin-bottom: 30px; text-align: center; color: var(--heading-color);">Educational Background
-            </h2>
+        <div class="glass-card">
+            <h2 class="timeline-heading">Educational Journey</h2>
 
-            <div class="edu-item scroll-observe delay-1">
-                <p class="edu-year">2024 - 2028</p>
-                <h3 class="edu-title" style="font-size: 1.3rem;">Guru Nanak Institutions of Technical Campus</h3>
-                <p class="edu-desc" style="font-weight: bold; color: var(--accent); margin-top: 5px;">B.Tech in
-                    Information Technology</p>
-            </div>
+            <div class="timeline">
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">2024 – 2028</p>
+                        <h3 class="timeline-title">Guru Nanak Institutions of Technical Campus</h3>
+                        <p class="timeline-desc">B.Tech in Information Technology</p>
+                    </div>
+                </div>
 
-            <div class="edu-item scroll-observe delay-2">
-                <p class="edu-year">Intermediate</p>
-                <h3 class="edu-title" style="font-size: 1.3rem;">SR Junior College</h3>
-            </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">Intermediate</p>
+                        <h3 class="timeline-title">SR Junior College</h3>
+                    </div>
+                </div>
 
-            <div class="edu-item scroll-observe delay-3">
-                <p class="edu-year">10th Grade</p>
-                <h3 class="edu-title" style="font-size: 1.3rem;">SR Digi High School</h3>
-            </div>
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">10th Grade</p>
+                        <h3 class="timeline-title">SR Digi High School</h3>
+                    </div>
+                </div>
 
-            <div class="edu-item scroll-observe delay-4"
-                style="border-left: 2px dashed var(--accent); opacity: 0.9; margin-top: 40px; border-radius: 8px;">
-                <p class="edu-year" style="color: var(--text-secondary); font-size: 0.85rem;">2023 (6 Months)</p>
-                <h3 class="edu-title" style="font-style: italic; font-size: 1.1rem; color: var(--accent);">PGDCA
-                    Certification</h3>
-                <p class="edu-desc">Post Graduate Diploma in Computer Applications</p>
+                <div class="timeline-node certification">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">2023 (6 Months)</p>
+                        <h3 class="timeline-title">PGDCA Certification</h3>
+                        <p class="timeline-desc">Post Graduate Diploma in Computer Applications</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
