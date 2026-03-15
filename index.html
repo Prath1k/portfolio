@@ -310,11 +310,6 @@
                 flex: 1;
             }
 
-            .theme-switch {
-                margin-left: auto;
-                margin-right: 20px;
-            }
-
             .nav-toggle-label {
                 display: block;
             }
@@ -464,7 +459,7 @@
                     alt="profile picture">
             </div>
 
-            <p class="welcome-text animate-up delay-3">Hello Welcome To Mysite</p>
+            <p class="welcome-text animate-up delay-3" id="dynamic-greeting">Hello, Welcome To My Site</p>
 
             <div class="button-group animate-up delay-4">
                 <a href="./Education.html" class="btn">Education</a>
@@ -477,6 +472,30 @@
     <footer>@2026 all rights reserved to prathik.</footer>
 
     <script src="scripts.js"></script>
+
+    <script>
+    // ─── DYNAMIC GREETING ────────────────────────────────────────────────────────
+    (function() {
+        const hour = new Date().getHours();
+        let greeting, icon;
+        if (hour >= 5 && hour < 12) {
+            greeting = 'Good Morning';
+            icon = '☀️';
+        } else if (hour >= 12 && hour < 17) {
+            greeting = 'Good Afternoon';
+            icon = '🌤️';
+        } else if (hour >= 17 && hour < 21) {
+            greeting = 'Good Evening';
+            icon = '🌅';
+        } else {
+            greeting = 'Good Night';
+            icon = '🌙';
+        }
+        const el = document.getElementById('dynamic-greeting');
+        if (el) el.innerHTML = `<span class="greeting-icon">${icon}</span>${greeting}, Welcome To My Site`;
+    })();
+    </script>
+    </script>
 </body>
 
 </html>
