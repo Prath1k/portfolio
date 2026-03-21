@@ -1,65 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Education | Prathik</title>
+    <link rel="stylesheet" href="theme.css">
     <style>
         /* Global Styles & Nav  */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Lucida Sans', sans-serif; }
-        body { background-image: url("background.jpeg"); background-size: cover; background-attachment: fixed; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
-        .my-custom-nav { background: rgba(51, 51, 51, 0.95); color: white; position: sticky; top: 0; z-index: 1000; padding: 10px 0; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .logo-box { display: flex; flex-direction: column; }
-        .logo { font-size: 1.5rem; font-weight: bold; }
-        .nav-tagline { font-size: 0.7rem; color: #ccc; margin-top: 2px; max-width: 200px; line-height: 1.2; }
-        .nav-links { display: flex; list-style: none; }
-        .nav-links li a { color: white; text-decoration: none; padding: 10px 20px; transition: 0.3s; font-size: 0.9rem; }
-        .nav-links li a:hover { color: #ff9f43; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lucida Sans', sans-serif;
+        }
 
-        /* Education Content */
-        .main-wrapper { flex: 1; padding: 40px 20px; display: flex; justify-content: center; align-items: center; }
-        .glass-card { background: rgba(252, 251, 251, 0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); max-width: 700px; width: 100%; }
-        
-        .edu-item { margin-bottom: 30px; border-left: 3px solid #333; padding-left: 20px; text-align: left; }
-        .edu-year { font-weight: bold; color: #ff9f43; font-size: 0.9rem; }
-        .edu-title { font-size: 1.4rem; margin: 5px 0; color: #1a1a1a; }
-        .edu-desc { font-size: 0.95rem; color: #444; }
+        html,
+        body {
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling on mobile */
+        }
 
-        footer { padding: 20px; color: rgb(255, 255, 255); text-align: center; font-size: 0.8rem; font-weight: bold; }
+        body {
+            background-image: var(--bg-image);
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .my-custom-nav {
+            background: var(--nav-bg);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .logo-box {
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-tagline {
+            font-size: 0.7rem;
+            color: #ccc;
+            margin-top: 2px;
+            max-width: 200px;
+            line-height: 1.2;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background-color: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links li a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links li a:hover::after {
+            width: calc(100% - 40px);
+        }
+
+        /* Education Timeline */
+        .main-wrapper {
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px var(--glass-shadow);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .timeline-heading {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--heading-color);
+            font-size: 1.8rem;
+            letter-spacing: 0.03em;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        /* Glowing vertical connector line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 14px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                var(--accent) 10%,
+                rgba(79, 134, 247, 0.7) 50%,
+                rgba(168, 85, 247, 0.7) 80%,
+                transparent 100%
+            );
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(79, 134, 247, 0.3);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: timeline-fadeIn 0.7s ease forwards;
+        }
+
+        .timeline-node:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-node:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-node:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-node:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes timeline-fadeIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Pulsing dot on timeline */
+        .timeline-dot {
+            position: absolute;
+            left: -33px;
+            top: 6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 12px var(--accent), 0 0 25px rgba(79, 134, 247, 0.2);
+            z-index: 2;
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            opacity: 0;
+            animation: dot-ping 2s ease-out infinite;
+        }
+
+        @keyframes dot-ping {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+
+        /* Card for each education entry */
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: all 0.35s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(79, 134, 247, 0.05), rgba(168, 85, 247, 0.05));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateX(8px);
+            border-color: rgba(79, 134, 247, 0.25);
+            box-shadow: 0 8px 30px rgba(79, 134, 247, 0.1);
+        }
+
+        .timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            color: var(--heading-color);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            position: relative;
+        }
+
+        /* Certification node with special dashed border */
+        .timeline-node.certification .timeline-dot {
+            background: rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5), 0 0 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .timeline-node.certification .timeline-dot::after {
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .timeline-node.certification .timeline-card {
+            border-style: dashed;
+            border-color: rgba(168, 85, 247, 0.25);
+        }
+
+        .timeline-node.certification .timeline-year {
+            color: rgba(168, 85, 247, 0.8);
+        }
+
+        /* Mobile Menu */
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .glass-card {
+                padding: 30px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .logo-box {
+                flex: 1;
+            }
+
+            .nav-toggle-label {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: rgba(51, 51, 51, 0.98);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 50px;
+                transition: 0.4s;
+                transform: none;
+            }
+
+            .nav-toggle:checked~.nav-links {
+                left: 0;
+            }
+
+            .nav-toggle-label span,
+            .nav-toggle-label span::before,
+            .nav-toggle-label span::after {
+                display: block;
+                background: white;
+                height: 2px;
+                width: 25px;
+                position: relative;
+            }
+
+            .nav-toggle-label span::before {
+                content: '';
+                top: 8px;
+            }
+
+            .nav-toggle-label span::after {
+                content: '';
+                bottom: 10px;
+            }
+
+            .glass-card {
+                padding: 20px;
+            }
+
+            .timeline { padding-left: 35px; }
+            .timeline::before { left: 12px; }
+            .timeline-dot { left: -30px; width: 12px; height: 12px; }
+
+            .timeline-title {
+                font-size: 1.1rem;
+            }
+
+            .timeline-card {
+                padding: 16px 18px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-container {
+                padding: 0 10px;
+                flex-wrap: nowrap;
+            }
+
+            .logo-box {
+                flex: 1;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-tagline {
+                display: none;
+                /* Hide tagline on tiny screens to save space */
+            }
+
+            .theme-switch {
+                margin-left: auto;
+                margin-right: 15px;
+                transform: scale(0.85);
+                /* Slightly shrink toggle */
+            }
+
+            .glass-card {
+                padding: 15px;
+            }
+
+            .timeline-heading { font-size: 1.4rem; margin-bottom: 28px; }
+            .timeline { padding-left: 28px; }
+            .timeline::before { left: 10px; }
+            .timeline-dot { left: -24px; width: 10px; height: 10px; }
+
+            .timeline-title {
+                font-size: 1rem;
+            }
+
+            .timeline-node {
+                margin-bottom: 25px;
+            }
+
+            .timeline-card {
+                padding: 14px 16px;
+            }
+        }
+
+        footer {
+            padding: 20px;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
+    <video id="dark-bg-video" loop muted playsinline>
+        <source src="background-video.mp4" type="video/mp4">
+    </video>
+    <canvas id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></canvas>
+
     <nav class="my-custom-nav">
         <div class="nav-container">
             <div class="logo-box">
                 <div class="logo">Welcome</div>
                 <div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div>
             </div>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+
             <ul class="nav-links">
                 <li><a href="./index.html">Home</a></li>
                 <li><a href="./Education.html">Education</a></li>
                 <li><a href="./Projects.html">Projects</a></li>
                 <li><a href="./Contact.html">Contact</a></li>
             </ul>
+
+            <label class="theme-switch" title="Toggle Theme">
+                <input type="checkbox" id="themeToggleCheckbox">
+                <span class="slider round"></span>
+            </label>
+
+            <label for="nav-toggle" class="nav-toggle-label">
+                <span></span>
+            </label>
         </div>
     </nav>
 
     <div class="main-wrapper">
         <div class="glass-card">
-            <h2 style="margin-bottom: 30px; text-align: center;">Educational Background</h2>
-            <div class="edu-item">
-                <p class="edu-year">2024 - Present</p>
-                <h3 class="edu-title">B.Tech Degree</h3>
-                <p class="edu-desc">Focusing on Computer Science, Data Structures, and Algorithms.</p>
-            </div>
-            <div class="edu-item">
-                <p class="edu-year">2022 - 2024</p>
-                <h3 class="edu-title">Higher Secondary School</h3>
-                <p class="edu-desc">Completed with a focus on and Science.</p>
+            <h2 class="timeline-heading">Educational Journey</h2>
+
+            <div class="timeline">
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">2024 – 2028</p>
+                        <h3 class="timeline-title">Guru Nanak Institutions of Technical Campus</h3>
+                        <p class="timeline-desc">B.Tech in Information Technology</p>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">Intermediate</p>
+                        <h3 class="timeline-title">SR Junior College</h3>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">10th Grade</p>
+                        <h3 class="timeline-title">SR Digi High School</h3>
+                    </div>
+                </div>
+
+                <div class="timeline-node certification">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <p class="timeline-year">2023 (6 Months)</p>
+                        <h3 class="timeline-title">PGDCA Certification</h3>
+                        <p class="timeline-desc">Post Graduate Diploma in Computer Applications</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <footer>@2026 all rights reserved to prathik.</footer>
+
+    <script src="scripts.js"></script>
 </body>
+
 </html>
