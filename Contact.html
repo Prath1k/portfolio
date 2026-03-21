@@ -49,13 +49,13 @@
             height: 2px;
             bottom: 5px;
             left: 50%;
-            background-color: #ff9f43;
+            background-color: var(--accent);
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
 
         .nav-links li a:hover {
-            color: #ff9f43;
+            color: var(--accent);
         }
 
         .nav-links li a:hover::after {
@@ -181,7 +181,7 @@
         textarea:focus {
             background: var(--card-bg-hover);
             border-color: var(--accent);
-            box-shadow: 0 4px 15px rgba(255, 159, 67, 0.2);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
             transform: translateY(-2px);
         }
 
@@ -231,7 +231,7 @@
             touch-action: manipulation;
         }
 
-        .social-links a:hover { color: #ff9f43; }
+        .social-links a:hover { color: var(--accent); }
 
         /* Mobile Menu Logic (Identical to Home) */
         .nav-toggle {
@@ -256,13 +256,21 @@
                 top: 70px;
                 left: -100%;
                 width: 100%;
-                height: 100vh;
-                background: rgba(51, 51, 51, 0.98);
+                height: calc(100vh - 70px);
+                background: var(--nav-bg);
                 flex-direction: column;
                 align-items: center;
                 padding-top: 50px;
                 transition: 0.4s;
                 transform: none;
+                gap: 30px;
+                z-index: 999;
+                overflow-y: auto;
+            }
+
+            .nav-links li a {
+                font-size: 1.2rem;
+                padding: 15px 30px;
             }
 
             .nav-toggle:checked~.nav-links {
@@ -277,9 +285,36 @@
                 height: 2px;
                 width: 25px;
                 position: relative;
+                transition: transform 0.3s ease-in-out, background 0.3s ease-in-out, top 0.3s ease-in-out, bottom 0.3s ease-in-out;
             }
             .nav-toggle-label span::before { content: ''; top: 8px; }
             .nav-toggle-label span::after { content: ''; bottom: 10px; }
+
+            .nav-toggle:checked ~ .nav-toggle-label span {
+                background: transparent;
+            }
+            .nav-toggle:checked ~ .nav-toggle-label span::before {
+                top: 0;
+                transform: rotate(45deg);
+            }
+            .nav-toggle:checked ~ .nav-toggle-label span::after {
+                bottom: 0;
+                transform: rotate(-45deg);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .nav-container { padding: 0 10px; flex-wrap: nowrap; }
+            .logo-box { flex: 1; }
+            .logo { font-size: 1.1rem; }
+            .nav-tagline { display: none; }
+            .glass-card { padding: 25px 15px; }
+            .paper-plane-svg { width: 50px; height: 50px; }
+            .theme-switch {
+                margin-left: auto;
+                margin-right: 15px;
+                transform: scale(0.85);
+            }
         }
 
         footer {
@@ -288,6 +323,36 @@
             text-align: center;
             font-size: 0.8rem;
             font-weight: bold;
+        }
+
+        /* Paper Plane Animation */
+        .paper-plane-container {
+            position: fixed;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .paper-plane-svg {
+            width: 80px;
+            height: 80px;
+            fill: white;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes paperPlaneFlying {
+            0% {
+                transform: translate(0, 0) rotate(-15deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(100vw - 100px), calc(-100vh + 100px)) rotate(20deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .paper-plane-svg.flying {
+            animation: paperPlaneFlying 1.5s ease-in forwards !important;
         }
     </style>
 </head>
@@ -349,7 +414,7 @@
         </div>
     </div>
 
-    <!-- Enhanced Paper Plane -->
+    <!-- Paper Plane Animation -->
     <div class="paper-plane-container" id="paperPlaneContainer">
         <svg class="paper-plane-svg" viewBox="0 0 24 24">
             <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
@@ -378,6 +443,30 @@
                 status.style.display = 'block';
                 status.style.color = 'green';
                 form.reset(); // Clears the form inputs
+                
+                // Get the send button position
+                const submitBtn = event.target.querySelector('.submit-btn');
+                const btnRect = submitBtn.getBoundingClientRect();
+                
+                // Position paper plane at button location
+                const paperPlaneContainer = document.getElementById('paperPlaneContainer');
+                const paperPlane = document.querySelector('.paper-plane-svg');
+                
+                // Reset animation class for multiple submissions
+                paperPlane.classList.remove('flying');
+                void paperPlane.offsetWidth; // Trigger reflow to restart animation
+                
+                paperPlaneContainer.style.left = btnRect.left + 'px';
+                paperPlaneContainer.style.top = btnRect.top + 'px';
+                paperPlaneContainer.style.opacity = '1';
+                
+                // Trigger flying animation
+                paperPlane.classList.add('flying');
+                
+                // Hide it again after animation
+                setTimeout(() => {
+                    paperPlaneContainer.style.opacity = '0';
+                }, 1500);
             } else {
                 const responseData = await response.json();
                 if (Object.prototype.hasOwnProperty.call(responseData, 'errors')) {
