@@ -4,7 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects | Prathik</title>
+    <meta name="description" content="Projects by Prathik Kontham. Explore my latest work, including Orbit Command and other web development projects.">
+    <meta name="keywords" content="prathik kontham projects, prathiks portfolio projects, kontham prathik work, web developer portfolio">
+    <meta name="author" content="Kontham Prathik">
+    <meta property="og:title" content="Projects | Prathik Kontham">
+    <meta property="og:description" content="Projects by Prathik Kontham. Explore my latest work, including Orbit Command and other web development projects.">
+    <meta property="og:url" content="https://portfolio.prathik.me/Projects.html">
+    <meta property="og:type" content="website">
+    <title>Projects | Prathik Kontham</title>
     <link rel="stylesheet" href="theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -473,6 +480,14 @@
     const GEOM_SEGMENTS = isMobile ? 32 : 64;
 
     // ─── PROJECT DATA ───────────────────────────────────────────────────────────
+    const sunProjectData = {
+        name: "Orbit Command",
+        desc: "A powerful space dashboard providing direct feeds to live telemetry, solar system mapping, deep space arrays, and unfiltered data from leading space agencies. Built as my most important project.",
+        tags: ["Space", "Telemetry", "3D", "NASA/ESA API"],
+        link: "https://space.prathik.me",
+        color: 0xffa030
+    };
+
     const PROJECTS = [
         {
             name: "Portfolio Website",
@@ -886,15 +901,20 @@
 
         raycaster.setFromCamera(mouse, camera);
         const planetMeshes = planetObjects.map(o => o.planet);
+        planetMeshes.push(sun);
         const hits = raycaster.intersectObjects(planetMeshes, true);
 
         if (hits.length > 0) {
             let foundPlanet = null;
-            planetObjects.forEach(obj => {
-                if (obj.planet === hits[0].object || obj.planet === hits[0].object.parent) {
-                    foundPlanet = obj.proj;
-                }
-            });
+            if (hits[0].object === sun || hits[0].object.parent === sun) {
+                foundPlanet = sunProjectData;
+            } else {
+                planetObjects.forEach(obj => {
+                    if (obj.planet === hits[0].object || obj.planet === hits[0].object.parent) {
+                        foundPlanet = obj.proj;
+                    }
+                });
+            }
             if (foundPlanet) {
                 hoveredPlanet = foundPlanet;
                 // Only show label on non-touch devices (hover doesn't exist on touch)
@@ -920,13 +940,21 @@
         mouse.x = (pt.clientX / window.innerWidth)  * 2 - 1;
         mouse.y = -(pt.clientY / window.innerHeight) * 2 + 1;
         raycaster.setFromCamera(mouse, camera);
-        const hits = raycaster.intersectObjects(planetObjects.map(o => o.planet), true);
+        
+        const planetMeshes = planetObjects.map(o => o.planet);
+        planetMeshes.push(sun);
+        const hits = raycaster.intersectObjects(planetMeshes, true);
+        
         if (hits.length > 0) {
-            let idx = null;
-            planetObjects.forEach((obj, i) => {
-                if (obj.planet === hits[0].object || hits[0].object.parent === obj.planet) idx = i;
-            });
-            if (idx !== null) openModal(idx);
+            if (hits[0].object === sun || hits[0].object.parent === sun) {
+                openModal(sunProjectData);
+            } else {
+                let idx = null;
+                planetObjects.forEach((obj, i) => {
+                    if (obj.planet === hits[0].object || hits[0].object.parent === obj.planet) idx = i;
+                });
+                if (idx !== null) openModal(idx);
+            }
         }
     }
 
@@ -964,8 +992,8 @@
     canvas.addEventListener('wheel',      onWheel, { passive: false });
 
     // ─── MODAL ───────────────────────────────────────────────────────────────────
-    function openModal(idx) {
-        const p = PROJECTS[idx];
+    function openModal(data) {
+        const p = typeof data === 'number' ? PROJECTS[data] : data;
         document.getElementById('modalTitle').textContent = p.name;
         document.getElementById('modalDesc').textContent  = p.desc;
         document.getElementById('modalLink').href         = p.link;
