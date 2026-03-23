@@ -447,7 +447,7 @@
             <svg viewBox="0 0 24 24" stroke-width="1.5">
                 <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>DRAG TO ROTATE &nbsp;|&nbsp; SCROLL TO ZOOM</span>
+            <span>DRAG TO ROTATE &nbsp;|&nbsp; SCROLL TO ZOOM &nbsp;|&nbsp; WASD TO EXPLORE</span>
         </div>
     </div>
 
@@ -553,6 +553,19 @@
             orbitSpeed: 0.00028,
             rotationSpeed: 0.009,
             hasRing: true,
+        },
+        {
+            name: "Games",
+            desc: "PixelArena: A premium, minimalist game hub featuring a collection of 12 highly polished, interactive games including Pac-Man, Space Invaders, and online multiplayer games.",
+            tags: ["React", "JavaScript", "Games", "Interactive"],
+            link: "https://eon.prathik.me",
+            color: 0x10b981,       // emerald green
+            ringColor: 0x6ee7b7,
+            orbitRadius: 22.5,
+            size: 0.9,
+            orbitSpeed: 0.0002,
+            rotationSpeed: 0.01,
+            hasRing: false,
         },
     ];
 
@@ -867,21 +880,40 @@
     let camPhi        = 0.42;       // vertical angle
     let camRadius     = 18;
     let targetCamRadius = 18;
+    
+    // Smooth panning target
+    let targetX = 0, targetY = 0, targetZ = 0;
+    let currentX = 0, currentY = 0, currentZ = 0;
+
+    // Keyboard state
+    const keys = { w: false, a: false, s: false, d: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
+    window.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
+    window.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
+
+    // Panning state
+    let isPanning = false;
 
     function updateCamera() {
-        camera.position.x = camRadius * Math.sin(camTheta) * Math.cos(camPhi);
-        camera.position.y = camRadius * Math.sin(camPhi);
-        camera.position.z = camRadius * Math.cos(camTheta) * Math.cos(camPhi);
-        camera.lookAt(0, 0, 0);
+        camera.position.x = currentX + camRadius * Math.sin(camTheta) * Math.cos(camPhi);
+        camera.position.y = currentY + camRadius * Math.sin(camPhi);
+        camera.position.z = currentZ + camRadius * Math.cos(camTheta) * Math.cos(camPhi);
+        camera.lookAt(currentX, currentY, currentZ);
     }
 
     // Mouse / touch drag
     function onPointerDown(e) {
-        isDragging = true;
         lastInteraction = clock.getElapsedTime();
         const pt = e.touches ? e.touches[0] : e;
+        if (e.button === 2 || (e.touches && e.touches.length === 2)) {
+            isPanning = true;
+        } else {
+            isDragging = true;
+        }
         dragStart = { x: pt.clientX, y: pt.clientY };
     }
+
+    // Prevent default context menu on right click
+    canvas.addEventListener('contextmenu', e => e.preventDefault());
 
     function onPointerMove(e) {
         const pt = e.touches ? e.touches[0] : e;
@@ -892,6 +924,23 @@
             const dy = (pt.clientY - dragStart.y) * 0.004;
             camTheta -= dx;
             camPhi    = Math.max(-1.2, Math.min(1.2, camPhi + dy));
+            dragStart = { x: pt.clientX, y: pt.clientY };
+        } else if (isPanning) {
+            const dx = (pt.clientX - dragStart.x) * 0.02;
+            const dy = (pt.clientY - dragStart.y) * 0.02;
+            
+            // Calculate right and up vectors based on camera angle
+            const rightX = Math.cos(camTheta);
+            const rightZ = -Math.sin(camTheta);
+            
+            const upX = Math.sin(camTheta) * Math.sin(camPhi);
+            const upY = Math.cos(camPhi);
+            const upZ = Math.cos(camTheta) * Math.sin(camPhi);
+
+            targetX -= (rightX * dx + upX * dy);
+            targetY += upY * dy; // optional: inverted Y depending on preference
+            targetZ -= (rightZ * dx + upZ * dy);
+            
             dragStart = { x: pt.clientX, y: pt.clientY };
         }
 
@@ -929,12 +978,13 @@
         } else {
             hoveredPlanet = null;
             planetLabel.style.display = 'none';
-            canvas.style.cursor = isDragging ? 'grabbing' : 'grab';
+            canvas.style.cursor = isDragging ? 'grabbing' : (isPanning ? 'move' : 'grab');
         }
     }
 
     function onPointerUp(e) {
         isDragging = false;
+        isPanning = false;
         // Click detection
         const pt = e.changedTouches ? e.changedTouches[0] : e;
         mouse.x = (pt.clientX / window.innerWidth)  * 2 - 1;
@@ -1294,11 +1344,37 @@
 
         // Auto camera drift if user hasn't interacted recently
         const timeSinceInteraction = t - lastInteraction;
-        if (!isDragging && timeSinceInteraction > 10) {
+        if (!isDragging && !isPanning && timeSinceInteraction > 10) {
             camTheta += autoDriftSpeed;
             // Very gentle vertical oscillation
             camPhi = 0.42 + Math.sin(t * 0.1) * 0.05;
         }
+
+        // Keyboard exploration logic (WASD)
+        const speed = 0.3;
+        const rightX = Math.cos(camTheta);
+        const rightZ = -Math.sin(camTheta);
+        const fwdX = -Math.sin(camTheta);
+        const fwdZ = -Math.cos(camTheta);
+        
+        let moved = false;
+        if (keys.w || keys.ArrowUp) { targetX += fwdX * speed; targetZ += fwdZ * speed; moved = true; }
+        if (keys.s || keys.ArrowDown) { targetX -= fwdX * speed; targetZ -= fwdZ * speed; moved = true; }
+        if (keys.a || keys.ArrowLeft) { targetX -= rightX * speed; targetZ -= rightZ * speed; moved = true; }
+        if (keys.d || keys.ArrowRight) { targetX += rightX * speed; targetZ += rightZ * speed; moved = true; }
+        
+        if (moved) lastInteraction = t;
+
+        // Apply invisible boundaries so user doesn't get lost
+        const BOUNDARY = 35;
+        targetX = Math.max(-BOUNDARY, Math.min(BOUNDARY, targetX));
+        targetY = Math.max(-15, Math.min(15, targetY));
+        targetZ = Math.max(-BOUNDARY, Math.min(BOUNDARY, targetZ));
+
+        // Smooth follow target
+        currentX += (targetX - currentX) * 0.1;
+        currentY += (targetY - currentY) * 0.1;
+        currentZ += (targetZ - currentZ) * 0.1;
 
         // Smooth camera zoom
         camRadius += (targetCamRadius - camRadius) * 0.06;
