@@ -1,3 +1,6 @@
+let particleAnimationFrameId = null;
+let particleResizeHandler = null;
+
 document.addEventListener("DOMContentLoaded", () => {
     const themeCheckbox = document.getElementById("themeToggleCheckbox");
     const currentTheme = localStorage.getItem("theme") || "light";
@@ -58,6 +61,15 @@ document.addEventListener("DOMContentLoaded", () => {
 function initParticles() {
     const canvas = document.getElementById("particles-js");
     if (!canvas) return;
+
+    if (particleAnimationFrameId !== null) {
+        cancelAnimationFrame(particleAnimationFrameId);
+        particleAnimationFrameId = null;
+    }
+    if (particleResizeHandler) {
+        window.removeEventListener("resize", particleResizeHandler);
+        particleResizeHandler = null;
+    }
 
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -166,17 +178,18 @@ function initParticles() {
             particlesArray[i].update();
             particlesArray[i].draw();
         }
-        requestAnimationFrame(animate);
+        particleAnimationFrameId = requestAnimationFrame(animate);
     }
 
     init();
     animate();
 
-    window.addEventListener("resize", () => {
+    particleResizeHandler = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         init();
-    });
+    };
+    window.addEventListener("resize", particleResizeHandler);
 }
 
 // Custom cursor trail logic
