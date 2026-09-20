@@ -2,7 +2,7 @@
 
 :root {
     /* Auto dark mode base based on OS, or overridden by class */
-    --bg-image: url("background.jpeg");
+    --bg-image: url("background.jpeg?v=2");
     --text-primary: #333;
     --text-secondary: #444;
     --text-muted: #ccc;
@@ -22,7 +22,7 @@
 
 [data-theme="dark"] {
     /* Dark Mode Overrides - Deep Space Feel */
-    --bg-image: url('background.jpeg');
+    --bg-image: url('background.jpeg?v=2');
     --text-primary: #f0f0f0;
     --text-secondary: #d0d0d0;
     --text-muted: #888;
