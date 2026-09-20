@@ -249,6 +249,47 @@
             margin-bottom: 25px;
         }
 
+        .about-card {
+            max-width: 900px;
+            margin-top: 28px;
+            text-align: left;
+        }
+
+        .about-card h2 {
+            margin-bottom: 14px;
+            color: var(--heading-color);
+            font-size: 1.8rem;
+        }
+
+        .about-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .about-focus {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .about-focus-item {
+            border-left: 3px solid var(--accent);
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .about-focus-item strong {
+            display: block;
+            color: var(--heading-color);
+            margin-bottom: 4px;
+        }
+
+        .about-focus-item span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
         /* --- Button Styles --- */
         .button-group {
             display: flex;
@@ -399,6 +440,14 @@
             .welcome-text {
                 font-size: 1rem;
             }
+
+            .about-focus {
+                grid-template-columns: 1fr;
+            }
+
+            .about-card h2 {
+                font-size: 1.5rem;
+            }
         }
 
         @media screen and (max-width: 480px) {
@@ -448,11 +497,6 @@
 </head>
 
 <body>
-    <video id="dark-bg-video" loop muted playsinline autoplay>
-        <source src="background-video.mp4" type="video/mp4">
-    </video>
-    <canvas id="particles-js" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></canvas>
-
     <nav class="my-custom-nav">
         <div class="nav-container">
             <div class="logo-box">
@@ -464,6 +508,7 @@
 
             <ul class="nav-links">
                 <li><a href="./index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="./Education.html">Education</a></li>
                 <li><a href="./Projects.html">Projects</a></li>
                 <li><a href="./Contact.html">Contact</a></li>
@@ -497,6 +542,29 @@
                 <a href="./Projects.html" class="btn">Projects</a>
             </div>
         </div>
+
+        <section class="glass-card about-card animate-up delay-4" id="about" aria-labelledby="about-title">
+            <h2 id="about-title">About Me</h2>
+            <p>
+                I am Prathik Kontham, an Information Technology student at Guru Nanak Institutions of Technical Campus.
+                I enjoy learning by building: from interactive games and creative web experiences to simulations and
+                larger project ideas that challenge me to think more deeply about design, logic, and usability.
+            </p>
+            <div class="about-focus">
+                <div class="about-focus-item">
+                    <strong>Build</strong>
+                    <span>Interactive websites and experiments</span>
+                </div>
+                <div class="about-focus-item">
+                    <strong>Explore</strong>
+                    <span>JavaScript, canvas, and creative interfaces</span>
+                </div>
+                <div class="about-focus-item">
+                    <strong>Grow</strong>
+                    <span>Turning each project into a new lesson</span>
+                </div>
+            </div>
+        </section>
     </div>
 
     <footer>@2026 all rights reserved to prathik.</footer>
@@ -507,22 +575,18 @@
     // ─── DYNAMIC GREETING ────────────────────────────────────────────────────────
     (function() {
         const hour = new Date().getHours();
-        let greeting, icon;
+        let greeting;
         if (hour >= 5 && hour < 12) {
             greeting = 'Good Morning';
-            icon = '☀️';
         } else if (hour >= 12 && hour < 17) {
             greeting = 'Good Afternoon';
-            icon = '🌤️';
         } else if (hour >= 17 && hour < 21) {
             greeting = 'Good Evening';
-            icon = '🌅';
         } else {
             greeting = 'Good Night';
-            icon = '🌙';
         }
         const el = document.getElementById('dynamic-greeting');
-        if (el) el.innerHTML = `<span class="greeting-icon">${icon}</span>${greeting}, Welcome To My Site`;
+        if (el) el.textContent = `${greeting}, Welcome To My Site`;
     })();
     </script>
 </body>

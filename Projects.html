@@ -460,6 +460,7 @@
             <div class="modal-tags" id="modalTags"></div>
             <div class="modal-actions">
                 <a id="modalLink" href="#" target="_blank" class="modal-btn modal-btn-primary">View Project →</a>
+                <a id="modalRepo" href="#" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-secondary">GitHub Repo</a>
                 <button onclick="closeModal()" class="modal-btn modal-btn-secondary">Close</button>
             </div>
         </div>
@@ -491,9 +492,10 @@
     const PROJECTS = [
         {
             name: "Portfolio Website",
-            desc: "A modern, responsive personal portfolio built with HTML and CSS, featuring theme toggling, smooth animations, and a particle canvas.",
-            tags: ["HTML", "CSS", "JavaScript", "Responsive"],
-            link: "#",
+            desc: "My interactive portfolio, built with HTML, CSS, and vanilla JavaScript to showcase my work, education, and experiments.",
+            tags: ["HTML", "CSS", "JavaScript", "Portfolio"],
+            link: "https://portfolio.prathik.me",
+            repo: "https://github.com/Prath1k/portfolio",
             color: 0x4f86f7,       // blue
             ringColor: 0x88aaff,
             orbitRadius: 4.5,
@@ -503,10 +505,11 @@
             hasRing: false,
         },
         {
-            name: "Tic-Tac-Toe Game",
-            desc: "A classic interactive Tic-Tac-Toe game developed using HTML, CSS, and logic algorithms with a clean win-detection system.",
-            tags: ["HTML", "CSS", "Logic", "Game"],
-            link: "https://prath1k.github.io/tic-tac-toe/",
+            name: "Javalin Games",
+            desc: "A polished browser game hub bringing together a collection of interactive games in one playful web experience.",
+            tags: ["React", "JavaScript", "Games", "Interactive"],
+            link: "https://eon.prathik.me",
+            repo: "https://github.com/Prath1k/Javalin",
             color: 0xf97316,       // orange
             ringColor: 0xffb347,
             orbitRadius: 7.2,
@@ -516,10 +519,11 @@
             hasRing: true,
         },
         {
-            name: "Proposal Website",
-            desc: "A creative, interactive website designed for a Valentine's Day proposal with playful animations and a heartfelt experience.",
-            tags: ["HTML", "CSS", "Animation", "Creative"],
-            link: "https://prath1k.github.io/valentines/",
+            name: "Project Sahakar",
+            desc: "A hackathon project focused on turning a practical problem statement into a complete, accessible web experience.",
+            tags: ["Hackathon", "Web App", "Product", "Teamwork"],
+            link: "https://project-sahakar-kappa.vercel.app",
+            repo: "https://github.com/Prath1k/Project-Sahakar",
             color: 0xf43f5e,       // pink
             ringColor: 0xff6b8a,
             orbitRadius: 10.5,
@@ -529,10 +533,11 @@
             hasRing: false,
         },
         {
-            name: "Birthday Surprise",
-            desc: "An interactive birthday experience with an animated cake, candle-blowing, a swipeable carousel of memories, random wisdom facts, and background music. Built as a heartfelt surprise for a special person.",
-            tags: ["HTML", "CSS", "JavaScript", "Interactive", "Animation"],
-            link: "https://prath1k.github.io/birthday/",
+            name: "Cutter Gang",
+            desc: "A focused web product with a live deployment, built to turn a clear idea into a usable experience from interface to launch.",
+            tags: ["Web App", "Vercel", "UI", "Product"],
+            link: "https://cutter-gang.vercel.app",
+            repo: "https://github.com/Prath1k/Cutter-Gang",
             color: 0xa855f7,       // violet/purple
             ringColor: 0xd8b4fe,
             orbitRadius: 14.2,
@@ -546,6 +551,7 @@
             desc: "A high-performance 2D N-body gravity simulator. Design your own cosmos, launch stars, planets, and asteroids, or unleash a black hole to wreck worlds.",
             tags: ["Physics", "Canvas", "JavaScript", "Simulator"],
             link: "https://gravitas.prathik.me/",
+            repo: "https://github.com/Prath1k/Gravitas",
             color: 0x6366f1,       // indigo
             ringColor: 0x94a3b8,
             orbitRadius: 18.2,
@@ -555,10 +561,11 @@
             hasRing: true,
         },
         {
-            name: "Games",
-            desc: "PixelArena: A premium, minimalist game hub featuring a collection of 12 highly polished, interactive games including Pac-Man, Space Invaders, and online multiplayer games.",
-            tags: ["React", "JavaScript", "Games", "Interactive"],
-            link: "https://eon.prathik.me",
+            name: "Talam",
+            desc: "A live product experiment from my GitHub portfolio, designed and deployed as a complete web experience rather than a static prototype.",
+            tags: ["Web App", "Product", "Deployment", "Experiment"],
+            link: "https://talam-delta.vercel.app",
+            repo: "https://github.com/Prath1k/Talam",
             color: 0x10b981,       // emerald green
             ringColor: 0x6ee7b7,
             orbitRadius: 22.5,
@@ -1047,6 +1054,8 @@
         document.getElementById('modalTitle').textContent = p.name;
         document.getElementById('modalDesc').textContent  = p.desc;
         document.getElementById('modalLink').href         = p.link;
+        const repoLink = document.getElementById('modalRepo');
+        repoLink.href = p.repo || "https://github.com/Prath1k";
 
         const icon = document.getElementById('modalIcon');
         const hexColor = '#' + p.color.toString(16).padStart(6, '0');
