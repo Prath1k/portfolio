@@ -28,7 +28,7 @@ The portfolio features two completely distinct, hand-crafted aesthetic themes th
 
 ## Project Structure
 
-- `website.html` - The primary landing page featuring an introduction, dynamic typed text, and primary call-to-action buttons.
+- `index.html` - The primary landing page featuring an introduction, profile, About section, and primary call-to-action buttons.
 - `Education.html` - A chronological, animated timeline detailing academic history and certifications.
 - `Projects.html` - A responsive CSS Grid showcasing development work and links to live demos/repositories.
 - `Contact.html` - A frosted-glass contact form and animated social media link hub.
@@ -46,5 +46,5 @@ Because this project is built entirely independent of heavy node modules or buil
 
 1. Clone or download the repository to your local machine.
 2. Ensure `background.jpeg` is located in the root directory.
-3. Open `website.html` directly in any modern web browser.
+3. Open `index.html` directly in any modern web browser.
 4. (Optional) For the best experience viewing local files, you can use a lightweight server like VS Code's "Live Server" extension.

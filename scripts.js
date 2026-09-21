@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const themeCheckbox = document.getElementById("themeToggleCheckbox");
     const currentTheme = localStorage.getItem("theme") || "light";
+    document.querySelectorAll(".current-year").forEach(element => {
+        element.textContent = new Date().getFullYear();
+    });
 
     // Set initial state
     if (currentTheme === "dark") {

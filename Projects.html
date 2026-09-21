@@ -36,6 +36,7 @@
         .project-card { min-height: 250px; padding: 26px; border: 1px solid var(--card-border); border-radius: 20px; background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); box-shadow: 0 8px 32px var(--glass-shadow); cursor: pointer; transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease; }
         .project-card:hover, .project-card:focus-visible { border-color: var(--accent); outline: none; transform: translateY(-5px); background: var(--card-bg-hover); box-shadow: 0 15px 40px var(--glass-shadow-hover); }
         .project-number { color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; }
+        .project-status { display: inline-block; margin-left: 8px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; }
         .project-card h2 { margin: 22px 0 12px; font-size: 1.35rem; }
         .project-card p { margin: 0; color: var(--text-secondary); line-height: 1.6; }
         .project-tags, .modal-tags { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -78,7 +79,7 @@
 <body>
     <nav class="my-custom-nav">
         <div class="nav-container">
-            <div class="logo-box"><div class="logo">Welcome</div><div class="nav-tagline">Just a 19 year old guy passionate about learning new things</div></div>
+            <div class="logo-box"><div class="logo">Prathik Kontham</div><div class="nav-tagline">Information Technology student and web developer</div></div>
             <input type="checkbox" id="nav-toggle" class="nav-toggle">
             <ul class="nav-links">
                 <li><a href="./index.html">Home</a></li>
@@ -113,15 +114,15 @@
         </article>
     </div>
 
-    <footer>@2026 all rights reserved to prathik.</footer>
+    <footer>&copy; <span class="current-year"></span> Prathik Kontham.</footer>
     <script src="scripts.js"></script>
     <script>
         const PROJECTS = [
-            { name: 'Javalin Games', summary: 'A polished browser game hub bringing together 12 interactive games, from classic arcade experiences to strategy and skill challenges.', details: 'PixelArena combines a clean interface with a broad collection of playable experiences including Pac-Man, Space Invaders, Neon Snake, Memory, Pong, chess, and algorithm visualizations. It is designed to feel fast, responsive, and fun across devices.', tags: ['JavaScript', 'Games', 'Interactive', 'Web App'], link: 'https://eon.prathik.me', repo: 'https://github.com/Prath1k/Javalin' },
-            { name: 'AcademiaNexus', summary: 'A TypeScript portal connecting students, academicians, industry partners, and institutions through skills, assessments, opportunities, and collaboration.', details: 'AcademiaNexus explores a complete academic ecosystem with role-based workspaces, skill matching, assessment delivery, applications, recruiter shortlisting, analytics, and digital portfolio workflows.', tags: ['React', 'TypeScript', 'Education', 'Platform'], link: 'https://github.com/Prath1k/Academia', repo: 'https://github.com/Prath1k/Academia' },
-            { name: 'GNITC Student ERP System', summary: 'A student-focused ERP concept for bringing academic information, campus workflows, and student services into one organized digital experience.', details: 'This project focuses on making common student and campus workflows easier to access from a single system. The public GitHub profile is linked while the dedicated project repository is being organized.', tags: ['ERP', 'Education', 'Web App', 'Student Portal'], link: 'https://github.com/Prath1k', repo: 'https://github.com/Prath1k' },
-            { name: 'Orbit Command', summary: 'A space dashboard with live telemetry, solar system mapping, deep space arrays, and data from leading space agencies.', details: 'Orbit Command is an exploration-focused interface for browsing space data through an immersive dashboard. It brings telemetry, mapping, and agency data into one visual experience.', tags: ['Space', 'Telemetry', '3D', 'NASA/ESA API'], link: 'https://space.prathik.me', repo: 'https://github.com/Prath1k' },
-            { name: 'Talam', summary: 'A modern web music player with local library playback, playlist browsing, queue management, lyrics and metadata enrichment, and live radio streaming.', details: 'Talam supports local music discovery, multiple audio formats, queue management, drag-and-drop ordering, saved playlists, lyrics, metadata enrichment, and responsive desktop and mobile controls.', tags: ['React', 'Vite', 'Music', 'TypeScript'], link: 'https://talam-delta.vercel.app', repo: 'https://github.com/Prath1k/Talam' }
+            { name: 'Javalin Games', status: 'Live demo', summary: 'A polished browser game hub bringing together 12 interactive games, from classic arcade experiences to strategy and skill challenges.', details: 'PixelArena combines a clean interface with a broad collection of playable experiences including Pac-Man, Space Invaders, Neon Snake, Memory, Pong, chess, and algorithm visualizations. It is designed to feel fast, responsive, and fun across devices.', tags: ['JavaScript', 'Games', 'Interactive', 'Web App'], link: 'https://eon.prathik.me', repo: 'https://github.com/Prath1k/Javalin' },
+            { name: 'AcademiaNexus', status: 'GitHub project', summary: 'A TypeScript portal connecting students, academicians, industry partners, and institutions through skills, assessments, opportunities, and collaboration.', details: 'AcademiaNexus explores a complete academic ecosystem with role-based workspaces, skill matching, assessment delivery, applications, recruiter shortlisting, analytics, and digital portfolio workflows.', tags: ['React', 'TypeScript', 'Education', 'Platform'], link: 'https://github.com/Prath1k/Academia', repo: 'https://github.com/Prath1k/Academia' },
+            { name: 'GNITC Student ERP System', status: 'Concept', summary: 'A student-focused ERP concept for bringing academic information, campus workflows, and student services into one organized digital experience.', details: 'This project focuses on making common student and campus workflows easier to access from a single system. The public GitHub profile is linked while the dedicated project repository is being organized.', tags: ['ERP', 'Education', 'Web App', 'Student Portal'], link: 'https://github.com/Prath1k', repo: 'https://github.com/Prath1k' },
+            { name: 'Orbit Command', status: 'Live demo', summary: 'A space dashboard with live telemetry, solar system mapping, deep space arrays, and data from leading space agencies.', details: 'Orbit Command is an exploration-focused interface for browsing space data through an immersive dashboard. It brings telemetry, mapping, and agency data into one visual experience.', tags: ['Space', 'Telemetry', '3D', 'NASA/ESA API'], link: 'https://space.prathik.me', repo: 'https://github.com/Prath1k' },
+            { name: 'Talam', status: 'Live demo', summary: 'A modern web music player with local library playback, playlist browsing, queue management, lyrics and metadata enrichment, and live radio streaming.', details: 'Talam supports local music discovery, multiple audio formats, queue management, drag-and-drop ordering, saved playlists, lyrics, metadata enrichment, and responsive desktop and mobile controls.', tags: ['React', 'Vite', 'Music', 'TypeScript'], link: 'https://talam-delta.vercel.app', repo: 'https://github.com/Prath1k/Talam' }
         ];
 
         const grid = document.getElementById('projectGrid');
@@ -133,7 +134,7 @@
             card.className = 'project-card';
             card.tabIndex = 0;
             card.setAttribute('role', 'button');
-            card.innerHTML = `<span class="project-number">0${index + 1}</span><h2>${project.name}</h2><p>${project.summary}</p><div class="project-tags">${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}</div>`;
+            card.innerHTML = `<span class="project-number">0${index + 1}</span><span class="project-status">${project.status}</span><h2>${project.name}</h2><p>${project.summary}</p><div class="project-tags">${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}</div>`;
             card.addEventListener('click', () => openModal(project));
             card.addEventListener('keydown', event => {
                 if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openModal(project); }
